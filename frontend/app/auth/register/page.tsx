@@ -11,18 +11,23 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Loader2, ArrowLeft } from "lucide-react"
+import { PassThrough } from "stream"
+import { toast } from "react-hot-toast"
 
 export default function RegisterPage() {
   const [step, setStep] = useState<"details" | "otp">("details")
   const [formData, setFormData] = useState({
     phoneNumber: "",
     username: "",
-    email: "",
+    password: "",
+    confirmPassword: "",
   })
   const [otp, setOtp] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [message, setMessage] = useState("")
+
+  
   const router = useRouter()
 
   const handleSendOTP = async (e: React.FormEvent) => {
@@ -31,6 +36,18 @@ export default function RegisterPage() {
     setError("")
 
     try {
+      console.log(formData)
+      if (formData.password !== formData.confirmPassword) {
+        toast.error("Passwords do not match!")
+        setLoading(false)
+        return
+      }
+
+      if (formData.phoneNumber.length !== 9 || !/^\d{9}$/.test(formData.phoneNumber)) {
+        setError("Enter a valid 9-digit phone number")
+        setLoading(false)
+        return
+      }
       const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -106,19 +123,27 @@ export default function RegisterPage() {
 
           {step === "details" ? (
             <form onSubmit={handleSendOTP} className="space-y-4">
+                    <div className="flex flex-col space-y-1 w-full">
+                      <Label htmlFor="phone" className="mb-4">Phone Number *</Label>
+                      <div className="flex">
+                        <span className="flex items-center px-3 py-1 bg-background text-white rounded-l-md border border-gray-600">
+                          +251
+                        </span>
+                        <Input
+                          id="phone"
+                          type="tel"
+                          placeholder="911234567"
+                          value={formData.phoneNumber}
+                          onChange={(e) =>
+                            setFormData((prev) => ({ ...prev, phoneNumber: e.target.value }))
+                          }
+                          required
+                          className="rounded-r-md flex-1 border border-gray-600"
+                        />
+                      </div>
+                    </div>
               <div>
-                <Label htmlFor="phone">Phone Number *</Label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  placeholder="+251911234567"
-                  value={formData.phoneNumber}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, phoneNumber: e.target.value }))}
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="username">Username</Label>
+                <Label htmlFor="username" className="mb-4">Username</Label>
                 <Input
                   id="username"
                   type="text"
@@ -127,16 +152,29 @@ export default function RegisterPage() {
                   onChange={(e) => setFormData((prev) => ({ ...prev, username: e.target.value }))}
                 />
               </div>
+
               <div>
-                <Label htmlFor="email">Email (Optional)</Label>
+                <Label htmlFor="password" className="mb-4">Password</Label>
                 <Input
-                  id="email"
-                  type="email"
-                  placeholder="your@email.com"
-                  value={formData.email}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
+                  id="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  value={formData.password}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, password: e.target.value }))}
                 />
               </div>
+
+              <div>
+                <Label htmlFor="username" className="mb-4">Confirm Password</Label>
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="Confirm your password"
+                  value={formData.confirmPassword}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, confirmPassword: e.target.value }))}
+                />
+              </div>
+            
               <Button type="submit" className="w-full" disabled={loading}>
                 {loading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
                 Send OTP
