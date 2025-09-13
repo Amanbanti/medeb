@@ -9,13 +9,15 @@ export default function HomePage() {
       {/* Header */}
       <header className="border-b border-border">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+        <Link href="/">
           <h1 className="text-2xl font-bold text-primary">Medeb</h1>
+          </Link>
           <div className="space-x-4">
             <Link href="/auth/login">
-              <Button variant="ghost">Login</Button>
+              <Button variant="ghost" className="cursor-pointer">Login</Button>
             </Link>
             <Link href="/auth/register">
-              <Button>Get Started</Button>
+              <Button className="cursor-pointer">Get Started</Button>
             </Link>
           </div>
         </div>
@@ -33,12 +35,12 @@ export default function HomePage() {
           </p>
           <div className="space-x-4">
             <Link href="/auth/register">
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
+              <Button size="lg" className="bg-primary cursor-pointer text-primary-foreground hover:bg-primary/90">
                 Start Playing Now
               </Button>
             </Link>
             <Link href="/pools">
-              <Button size="lg" variant="outline">
+              <Button size="lg" variant="secondary" className="cursor-pointer">
                 View Active Pools
               </Button>
             </Link>
@@ -49,7 +51,7 @@ export default function HomePage() {
       {/* Features */}
       <section className="py-16 px-4 bg-muted/50">
         <div className="container mx-auto">
-          <h3 className="text-3xl font-bold text-center mb-12">Why Choose LuckyBirr?</h3>
+          <h3 className="text-3xl font-bold text-center mb-12">Why Choose Medeb?</h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card>
               <CardHeader>
@@ -108,7 +110,7 @@ export default function HomePage() {
           <h3 className="text-3xl font-bold mb-4">Ready to Get Lucky?</h3>
           <p className="text-muted-foreground mb-8">Join thousands of players already winning with LuckyBirr</p>
           <Link href="/auth/register">
-            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
+            <Button size="lg" className="bg-primary cursor-pointer text-primary-foreground hover:bg-primary/90">
               Create Your Account
             </Button>
           </Link>
@@ -118,7 +120,7 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="border-t border-border py-8 px-4">
         <div className="container mx-auto text-center text-muted-foreground">
-          <p>&copy; 2024 LuckyBirr. All rights reserved.</p>
+          <p>&copy; 2026 Medeb. All rights reserved.</p>
         </div>
       </footer>
     </div>

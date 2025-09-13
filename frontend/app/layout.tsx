@@ -5,11 +5,11 @@ import { GeistMono } from "geist/font/mono"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import "./globals.css"
+import { Toaster } from "react-hot-toast"
 
 export const metadata: Metadata = {
-  title: "LuckyBirr - Ethiopian Lottery Pools",
-  description: "Join lottery pools and win big with LuckyBirr",
-  generator: "v0.app",
+  title: "Medeb - Ethiopian Lottery Pools",
+  description: "Join lottery pools and win big with Medeb!",
 }
 
 export default function RootLayout({
@@ -22,6 +22,7 @@ export default function RootLayout({
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} bg-background text-foreground`}>
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
+        <Toaster />
       </body>
     </html>
   )
